@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+
+<html lang="en" ng-app="fractalBakery">
+    <head>
+        <meta charset="utf-8">
+
+        <title>Fractal Bakery | Roll your own fractals</title>
+
+        <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400">
+        
+        
+        <link rel="stylesheet" href="fractalbakery.min.css">
+        <script src="fractalbakery.min.js"></script>
+        
+    </head>
+
+    <body>
+
+<!-- Begin Templates -->
+<script type="text/ng-template" id="fractalviewer.html">
+<div>
+    <canvas class='previewcanvas'></canvas>
+    <canvas class='fractalcanvas'></canvas>
+</div>
+
+
+</script>
+<!-- End Templates -->
+
+
+        <div ng-controller="MainCtrl" class="pure-g" id="content">
+            <div class="pure-u-1-3">
+                <form class="pure-form pure-form-aligned">
+                    <legend>Fractal parameters</legend>
+
+                    <fieldset>
+                        <div class="pure-control-group">
+                            <label for="maxIter">Max. iteration count:</label>
+                            <input type="number" ng-model="fractalParams.maxIter" min="1" required id="maxIter" class="mednum">
+                        </div>
+                        <div class="pure-control-group">
+                            <label for="eps">Tolerance:</label>
+                            <input type="number" ng-model="fractalParams.eps" min="0" required id="eps" class="mednum">
+                        </div>
+                        <div class="pure-control-group">
+                            <label>Width:</label>
+                            <input type="number" ng-model="width" class="mednum" min="3" required> px
+                        </div>
+                        <div class="pure-control-group">
+                            <label>Height:</label>
+                            <input type="number" ng-model="height" class="mednum" min="3" required> px
+                        </div>
+
+                        <div class="pure-control-group">
+                            <label>Top left corner:</label>
+                            <input type="number" class="shortnum" ng-model="fractalParams.reMin" required> +
+                            <input type="number" class="shortnum" ng-model="fractalParams.imMin" required>i
+                        </div>
+                        <div class="pure-control-group">
+                            <label>Bottom right corner:</label>
+                            <input type="number" class="shortnum" ng-model="fractalParams.reMax" required> +
+                            <input type="number" class="shortnum" ng-model="fractalParams.imMax" required>i
+                        </div>
+                    </fieldset>
+                </form>
+
+                <form class="pure-form pure-form-aligned">
+                    <div ng-repeat="root in fractalParams.roots">
+                        <legend>Root {{$index}}</legend>
+                        <fieldset>
+                            <div class="pure-control-group">
+                                <label>Position:</label>
+                                <input type="number" class="shortnum" ng-model="root.root.Re" required> +
+                                <input type="number" class="shortnum" ng-model="root.root.Im" required>i
+                            </div>
+                            <div class="pure-control-group">
+                                <label>Hue (0-1):</label>
+                                <input type="number" class="mednum" required ng-model="root.hue" min="0" max="1">
+                            </div>
+                        </fieldset>
+                    </div>
+                </form>
+            </div>
+
+            <div class="pure-u-2-3">
+                <fractal-viewer id="viewer" params="fractalParams" ng-style="{&apos;width&apos;: width, &apos;height&apos;: height}">
+                </fractal-viewer>
+            </div>
+        </div>
+    </body>
+</html>
