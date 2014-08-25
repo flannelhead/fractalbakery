@@ -1,0 +1,27 @@
+{
+  "name": "fractalbakery",
+  "main": "main.js",
+  "version": "0.1.0",
+  "authors": [
+    "Sakari Kapanen <sakari.m.kapanen@gmail.com>"
+  ],
+  "keywords": [
+    "newton",
+    "fractals"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.1",
+    "angular": "~1.3.0",
+    "purecss": "~0.5.0",
+    "pure": "~0.5.0"
+  }
+}

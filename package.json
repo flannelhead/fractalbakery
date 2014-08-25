@@ -1,0 +1,23 @@
+{
+  "name": "fractalbakery",
+  "version": "0.1.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "newton",
+    "fractal"
+  ],
+  "author": "Sakari Kapanen",
+  "license": "MIT",
+  "devDependencies": {
+    "grunt": "~0.4.5",
+    "grunt-contrib-concat": "^0.5.0",
+    "grunt-contrib-cssmin": "~0.10.0",
+    "grunt-contrib-uglify": "~0.5.1",
+    "grunt-inline-angular-templates": "~0.1.5",
+    "grunt-targethtml": "~0.2.6"
+  }
+}

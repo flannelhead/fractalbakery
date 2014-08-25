@@ -1,0 +1,29 @@
+.fractalviewer {
+    display: inline-block;
+}
+
+.fractalviewer div {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+}
+
+.fractalviewer .previewcanvas, .fractalviewer .fractalcanvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.fractalviewer .previewcanvas {
+    z-index: 99;
+}
+
+.fractalviewer .fractalcanvas {
+    z-index: 100;
+}
+
