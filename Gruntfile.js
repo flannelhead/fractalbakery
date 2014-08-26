@@ -4,8 +4,8 @@ module.exports = function(grunt) {
             build: {
                 files: {
                     'fractalbakery.js': [
-                        'src/jquery.js',
-                        'src/angular.js',
+                        'bower_components/jquery/dist/jquery.js',
+                        'bower_components/angular/angular.js',
                         'src/main.js',
                         'src/fractalrenderer.js',
                         'src/fractalviewer.js'
@@ -45,7 +45,7 @@ module.exports = function(grunt) {
             build: {
                 files: {
                     'fractalbakery.min.css': [
-                        'src/pure.css',
+                        'bower_components/pure/pure.css',
                         'src/fractalviewer.css',
                         'src/fractalbakery.css'
                     ]
