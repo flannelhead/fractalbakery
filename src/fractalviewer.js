@@ -32,14 +32,14 @@ angular.module('fractalBakery').directive('fractalViewer', ['fractalRenderer',
                 fractalRenderer.render(scope.params, previewWidth,
                     previewHeight)
                     .then(function(data) {
-                    renderFullImage(data.maxIter);
+                    renderFullImage(data.exposure);
                     var imageData = previewCtx.createImageData(previewWidth,
                         previewHeight);
                     imageData.data.set(new Uint8ClampedArray(data.buffer));
                     previewCtx.putImageData(imageData, 0, 0);
                 });
 
-                function renderFullImage(maxIter) {
+                function renderFullImage(exposure) {
                     // Render the full resolution image in blocks
                     var params = scope.params,
                         reScale = (params.reMax - params.reMin) / (width - 1),
@@ -60,7 +60,7 @@ angular.module('fractalBakery').directive('fractalViewer', ['fractalRenderer',
                             roots: params.roots
                         };
 
-                        fractalRenderer.render(config, w, h, maxIter)
+                        fractalRenderer.render(config, w, h, exposure)
                             .then(function(data) {
                             var imageData = fractalCtx.createImageData(w, h);
                             imageData.data.set(new Uint8ClampedArray(data.buffer));

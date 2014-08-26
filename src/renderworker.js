@@ -6,7 +6,7 @@ if (!PRODUCTION) {
 
 onmessage = function(event) {
     var result = renderer.render(event.data.config, event.data.width,
-        event.data.height, event.data.maxIter);
+        event.data.height, event.data.exposure);
     postMessage(result, [result.buffer]);
 };
 

@@ -1,5 +1,5 @@
 var renderer = {
-    render: function(config, width, height, givenMaxIter) {
+    render: function(config, width, height, givenExposure) {
         var buffer = new ArrayBuffer(4 * width * height),
             data = new Uint8ClampedArray(buffer);
         var reStep = (config.reMax - config.reMin) / (width - 1),
@@ -9,7 +9,7 @@ var renderer = {
             })),
             deriv = poly.derivative(),
             field = [],
-            c = 0, RGB, maxIter = 0,
+            c = 0, RGB, exposure = 0,
             epsSq = config.eps * config.eps, shade;
 
         for (var i = 0; i < height; i++) {
@@ -17,23 +17,24 @@ var renderer = {
                 field.push(newton.iterate(new Complex(config.reMin + j * reStep,
                     config.imMin + i * imStep), poly, deriv, config.roots,
                     epsSq, config.maxIter));
-                if (!givenMaxIter) {
-                    maxIter = Math.max(maxIter, field[field.length - 1].iter);
+                if (!givenExposure) {
+                    exposure = Math.max(exposure, field[field.length - 1].iter);
                 }
             }
         }
 
-        if (givenMaxIter) maxIter = givenMaxIter;
+        if (givenExposure) exposure = givenExposure;
+        var expReciprocal = 1 / exposure;
         for (i = 0, len = field.length; i < len; i++) {
             RGB = renderer.HSVtoRGB(field[i].root.hue, 1,
-                1 - field[i].iter / maxIter);
+                1 - field[i].iter * expReciprocal);
             data[c++] = RGB.R;
             data[c++] = RGB.G;
             data[c++] = RGB.B;
             data[c++] = 255;
         }
 
-        return { buffer: buffer, maxIter: maxIter };
+        return { buffer: buffer, exposure: exposure };
     },
 
     HSVtoRGB: function(H, S, V) {

@@ -5,7 +5,7 @@ angular.module('fractalBakery').factory('fractalRenderer', ['$q',
     var workers = [];
 
     return {
-        render: function(config, width, height, maxIter) {
+        render: function(config, width, height, exposure) {
             return $q(function(resolve, reject) {
                 var workerFile = PRODUCTION ? 'renderworker.min.js' :
                     'renderworker.js';
@@ -14,7 +14,7 @@ angular.module('fractalBakery').factory('fractalRenderer', ['$q',
                     config: config,
                     width: width,
                     height: height,
-                    maxIter: maxIter
+                    exposure: exposure
                 });
                 worker.onmessage = function(event) {
                     resolve(event.data);
