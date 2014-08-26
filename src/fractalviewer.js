@@ -27,17 +27,17 @@ angular.module('fractalBakery').directive('fractalViewer', ['fractalRenderer',
                 blockHeight, lastBlockWidth, lastBlockHeight, reScale, imScale;
 
             function render() {
+                if (width === 0 || height === 0) return;
                 fractalRenderer.cancelAll();
                 fractalCtx.clearRect(0, 0, width, height);
+                var imageData = previewCtx.createImageData(previewWidth,
+                    previewHeight);
                 // Render the preview image
-                fractalRenderer.render(params, previewWidth,
+                fractalRenderer.render(imageData, params, previewWidth,
                     previewHeight)
                     .then(function(data) {
                     renderFullImage(data.exposure);
-                    var imageData = previewCtx.createImageData(previewWidth,
-                        previewHeight);
-                    imageData.data.set(new Uint8ClampedArray(data.buffer));
-                    previewCtx.putImageData(imageData, 0, 0);
+                    previewCtx.putImageData(data.imageData, 0, 0);
                 });
             }
 
@@ -56,11 +56,10 @@ angular.module('fractalBakery').directive('fractalViewer', ['fractalRenderer',
                     roots: params.roots
                 };
 
-                fractalRenderer.render(config, w, h, exposure)
+                var imageData = fractalCtx.createImageData(w, h);
+                fractalRenderer.render(imageData, config, w, h, exposure)
                     .then(function(data) {
-                    var imageData = fractalCtx.createImageData(w, h);
-                    imageData.data.set(new Uint8ClampedArray(data.buffer));
-                    fractalCtx.putImageData(imageData, x, y);
+                    fractalCtx.putImageData(data.imageData, x, y);
                 });
             }
 

@@ -5,9 +5,9 @@ if (!PRODUCTION) {
 }
 
 onmessage = function(event) {
-    var result = renderer.render(event.data.config, event.data.width,
-        event.data.height, event.data.exposure);
-    postMessage(result, [result.buffer]);
+    var result = renderer.render(event.data.imageData, event.data.config,
+        event.data.width, event.data.height, event.data.exposure);
+    postMessage(result);
 };
 
 

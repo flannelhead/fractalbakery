@@ -1,7 +1,6 @@
 var renderer = {
-    render: function(config, width, height, givenExposure) {
-        var buffer = new ArrayBuffer(4 * width * height),
-            data = new Uint8ClampedArray(buffer);
+    render: function(imageData, config, width, height, givenExposure) {
+        var data = imageData.data;
         var reStep = (config.reMax - config.reMin) / (width - 1),
             imStep = (config.imMax - config.imMin) / (height  - 1),
             poly = ComplexPolynomial.fromRoots(config.roots.map(function(root) {
@@ -34,7 +33,7 @@ var renderer = {
             data[c++] = 255;
         }
 
-        return { buffer: buffer, exposure: exposure };
+        return { imageData: imageData, exposure: exposure };
     },
 
     HSVtoRGB: function(H, S, V) {
