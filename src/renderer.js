@@ -36,50 +36,6 @@ var renderer = {
         return { buffer: buffer, maxIter: maxIter };
     },
 
-    interpolate: function(imageData, ctx, width, height) {
-        var newData = ctx.createImageData(width, height),
-            dx = (imageData.width - 1) / (width - 1),
-            dy = (imageData.height - 1) / (height - 1),
-            c = 0, d = imageData.data, newD = newData.data;
-
-        function indicesAndWeights(x, y) {
-            var xOrig = x * dx, yOrig = y * dy,
-                x1 = Math.floor(xOrig), x2 = x1 + 1,
-                y1 = Math.floor(yOrig), y2 = y1 + 1,
-                dx1 = xOrig - x1, dx2 = 1 - dx1,
-                dy1 = yOrig - y1, dy2 = 1 - dy1;
-
-            if (x2 >= imageData.width) x2 = x1;
-            if (y2 >= imageData.height) y2 = y1;
-
-            var ind11 = y1 * imageData.width + x1,
-                ind12 = ind11 + x2 - x1,
-                ind21 = y2 * imageData.width + x1,
-                ind22 = ind21 + x2 - x1;
-
-            return [
-                { i: 4 * ind11, w: dy2 * dx2 },
-                { i: 4 * ind12, w: dy2 * dx1 },
-                { i: 4 * ind21, w: dy1 * dx2 },
-                { i: 4 * ind22, w: dy1 * dx1 }
-            ];
-        }
-
-        var w, n;
-        for (var i = 0; i < height; i++) {
-            for (var j = 0; j < width; j++) {
-                w = indicesAndWeights(j, i);
-                n = 4;
-                while (n--) {
-                    newD[c++] = d[w[0].i++] * w[0].w + d[w[1].i++] * w[1].w +
-                        d[w[2].i++] * w[2].w + d[w[3].i++] * w[3].w;
-                }
-            }
-        }
-
-        return newData;
-    },
-
     HSVtoRGB: function(H, S, V) {
         // http://en.wikipedia.org/wiki/HSL_and_HSV#Converting_to_RGB
         var C = V * S,
