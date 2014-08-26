@@ -1,6 +1,6 @@
 var newton = {
     iterate: function(guess, poly, deriv, roots, epsSq, maxIter) {
-        var root, z = guess, iter = 0, iterFraction;
+        var root, z = guess, iter = 0;
         do {
             z = z.sub(poly.evaluate(z).div(deriv.evaluate(z)));
             root = newton.whichRoot(z, roots, epsSq);
