@@ -21,6 +21,11 @@ fb.controller('MainCtrl', ['$scope', function($scope) {
 
     $scope.width = 800;
     $scope.height = 800;
+    $scope.tolExponent = 10;
+
+    $scope.updateTolerance = function() {
+        $scope.fractalParams.eps = Math.pow(10, -1 * $scope.tolExponent);
+    };
 }]);
 
 })();
