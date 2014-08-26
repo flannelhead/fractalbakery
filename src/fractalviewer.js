@@ -18,18 +18,19 @@ angular.module('fractalBakery').directive('fractalViewer', ['fractalRenderer',
             scope.$watch(function() { return element.height(); },
                 updateSize);
 
-            var previewCanvas = element.find('.previewcanvas'),
+            var params = scope.params,
+                previewCanvas = element.find('.previewcanvas'),
+                previewCtx = previewCanvas[0].getContext('2d'),
                 fractalCanvas = element.find('.fractalcanvas'),
+                fractalCtx = fractalCanvas[0].getContext('2d'),
                 width, height, previewWidth, previewHeight, blockWidth,
-                blockHeight;
+                blockHeight, lastBlockWidth, lastBlockHeight, reScale, imScale;
 
             function render() {
                 fractalRenderer.cancelAll();
-                var previewCtx = previewCanvas[0].getContext('2d'),
-                    fractalCtx = fractalCanvas[0].getContext('2d');
                 fractalCtx.clearRect(0, 0, width, height);
                 // Render the preview image
-                fractalRenderer.render(scope.params, previewWidth,
+                fractalRenderer.render(params, previewWidth,
                     previewHeight)
                     .then(function(data) {
                     renderFullImage(data.exposure);
@@ -38,61 +39,48 @@ angular.module('fractalBakery').directive('fractalViewer', ['fractalRenderer',
                     imageData.data.set(new Uint8ClampedArray(data.buffer));
                     previewCtx.putImageData(imageData, 0, 0);
                 });
+            }
 
-                function renderFullImage(exposure) {
-                    // Render the full resolution image in blocks
-                    var params = scope.params,
-                        reScale = (params.reMax - params.reMin) / (width - 1),
-                        imScale = (params.imMax - params.imMin) / (height - 1);
+            function renderBlock(x, y, w, h, exposure) {
+                var reMin = params.reMin + reScale * x,
+                    imMin = params.imMin + imScale * y;
+                var config = {
+                    reMin: reMin,
+                    imMin: imMin,
+                    reMax: reMin + reScale * w,
+                    imMax: imMin + imScale * h,
 
-                    function renderBlock(x, y, w, h) {
-                        var reMin = params.reMin + reScale * x,
-                            imMin = params.imMin + imScale * y;
-                        var config = {
-                            reMin: reMin,
-                            imMin: imMin,
-                            reMax: reMin + reScale * w,
-                            imMax: imMin + imScale * h,
+                    eps: params.eps,
+                    maxIter: params.maxIter,
 
-                            eps: params.eps,
-                            maxIter: params.maxIter,
+                    roots: params.roots
+                };
 
-                            roots: params.roots
-                        };
+                fractalRenderer.render(config, w, h, exposure)
+                    .then(function(data) {
+                    var imageData = fractalCtx.createImageData(w, h);
+                    imageData.data.set(new Uint8ClampedArray(data.buffer));
+                    fractalCtx.putImageData(imageData, x, y);
+                });
+            }
 
-                        fractalRenderer.render(config, w, h, exposure)
-                            .then(function(data) {
-                            var imageData = fractalCtx.createImageData(w, h);
-                            imageData.data.set(new Uint8ClampedArray(data.buffer));
-                            fractalCtx.putImageData(imageData, x, y);
-                        });
-                    }
-
-                    var hRemainder = height, wRemainder, h, w;
-                    while (hRemainder > 0) {
-                        wRemainder = width;
-                        if (hRemainder >= blockHeight) {
-                            h = blockHeight;
-                        } else {
-                            h = hRemainder;
-                        }
-                        while (wRemainder > 0) {
-                            if (wRemainder >= blockWidth) {
-                                w = blockWidth;
-                            } else {
-                                w = wRemainder;
-                            }
-                            renderBlock(width - wRemainder, height - hRemainder,
-                                w, h);
-
-                            wRemainder -= w;
-                        }
-                        hRemainder -= h;
-                    }
+            function renderRow(y, h, exposure) {
+                for (var j = 0; j < division - 1; j++) {
+                    renderBlock(j * blockWidth, y, blockWidth, h, exposure);
                 }
+                renderBlock(j * blockWidth, y, lastBlockWidth, h, exposure);
+            }
+
+            function renderFullImage(exposure) {
+                // Render the full resolution image in blocks
+                for (var i = 0; i < division - 1; i++) {
+                    renderRow(i * blockHeight, blockHeight, exposure);
+                }
+                renderRow(i * blockHeight, lastBlockHeight, exposure);
             }
 
             function updateSize() {
+                // Update all the dimensions and render.
                 width = element.width();
                 height = element.height();
                 if (width > height) {
@@ -104,6 +92,12 @@ angular.module('fractalBakery').directive('fractalViewer', ['fractalRenderer',
                 }
                 blockWidth = Math.floor(width / division);
                 blockHeight = Math.floor(height / division);
+                lastBlockWidth = width - (division - 1) * blockWidth;
+                lastBlockHeight = height - (division - 1) * blockHeight;
+                reScale = (scope.params.reMax - scope.params.reMin) /
+                    (width - 1);
+                imScale = (scope.params.imMax - scope.params.imMin) /
+                    (height - 1);
                 previewCanvas.attr('width', previewWidth);
                 previewCanvas.attr('height', previewHeight);
                 fractalCanvas.attr('width', width);
