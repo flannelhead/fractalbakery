@@ -1,16 +1,19 @@
 var newton = {
     iterate: function(guess, poly, deriv, roots, epsSq, maxIter) {
-        var root, z = guess, iter = 0;
+        var root, z = guess, iter = 0, iterFraction;
         do {
             z = z.sub(poly.evaluate(z).div(deriv.evaluate(z)));
             root = newton.whichRoot(z, roots, epsSq);
             iter++;
         } while (!root && iter < maxIter);
+
         if (!root) {
             root = roots[0];
         } else {
-            iter += Math.log(epsSq / root.previousDistance) /
-                Math.log(root.distance / root.previousDistance);
+            if (root.previousDistance) {
+                iter += Math.log(epsSq / root.previousDistance) /
+                    Math.log(root.distance / root.previousDistance);
+            }
         }
 
         return {
