@@ -15,7 +15,7 @@ fb.controller('MainCtrl', ['$scope', function($scope) {
         roots: [
             { root: { Re: -1, Im: 0 }, hue: 0 },
             { root: { Re:  0, Im: 0 }, hue: 0.333 },
-            { root: { Re:  1, Im: 0 }, hue: 0.666 }
+            { root: { Re:  1, Im: 0 }, hue: 0.667 }
         ]
     };
 
