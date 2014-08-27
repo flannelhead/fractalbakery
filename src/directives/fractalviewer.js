@@ -3,7 +3,7 @@
 angular.module('fractalBakery').directive('fractalViewer', ['fractalRenderer',
     function(fractalRenderer) {
     return {
-        templateUrl: 'fractalviewer.html',
+        templateUrl: 'views/fractalviewer.html',
         restrict: 'E',
         scope: {
             params: '=params'

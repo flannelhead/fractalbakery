@@ -8,7 +8,7 @@ angular.module('fractalBakery').factory('fractalRenderer', ['$q',
         render: function(imageData, config, width, height, exposure) {
             return $q(function(resolve, reject) {
                 var workerFile = PRODUCTION ? 'renderworker.min.js' :
-                    'renderworker.js';
+                    'worker/renderworker.js';
                 var worker = new Worker(workerFile);
                 worker.postMessage({
                     config: config,

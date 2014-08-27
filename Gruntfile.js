@@ -6,17 +6,17 @@ module.exports = function(grunt) {
                     'fractalbakery.js': [
                         'bower_components/jquery/dist/jquery.js',
                         'bower_components/angular/angular.js',
-                        'src/main.js',
-                        'src/fractalrenderer.js',
-                        'src/fractalviewer.js'
+                        'src/controllers/main.js',
+                        'src/services/fractalrenderer.js',
+                        'src/directives/fractalviewer.js'
                     ],
 
                     'renderworker.js': [
-                        'src/complex.js',
-                        'src/complexpolynomial.js',
-                        'src/newton.js',
-                        'src/renderer.js',
-                        'src/renderworker.js'
+                        'src/worker/complex.js',
+                        'src/worker/complexpolynomial.js',
+                        'src/worker/newton.js',
+                        'src/worker/renderer.js',
+                        'src/worker/renderworker.js'
                     ]
                 }
             }
@@ -46,8 +46,8 @@ module.exports = function(grunt) {
                 files: {
                     'fractalbakery.min.css': [
                         'bower_components/pure/pure.css',
-                        'src/fractalviewer.css',
-                        'src/fractalbakery.css'
+                        'src/css/fractalviewer.css',
+                        'src/css/fractalbakery.css'
                     ]
                 }
             }
@@ -67,7 +67,7 @@ module.exports = function(grunt) {
                     base: 'src'
                 },
                 files: {
-                    'index.html': ['src/fractalviewer.html']
+                    'index.html': ['src/views/fractalviewer.html']
                 }
             }
         }
