@@ -13,6 +13,8 @@ angular.module('fractalBakery').directive('fractalViewer', ['fractalRenderer',
             element.addClass('fractalviewer');
 
             scope.$watch('params', render, true);
+            scope.$watchGroup([ 'params.reMax', 'params.reMin', 'params.imMax',
+                'params.imMin' ], updateSize);
             scope.$watch(function() { return element.width(); },
                 updateSize);
             scope.$watch(function() { return element.height(); },
