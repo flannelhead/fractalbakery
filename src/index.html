@@ -101,14 +101,15 @@
                         </fractal-viewer>
 
                         <svg ng-attr-width='{{width}}' ng-attr-height='{{height}}'
-                            ng-mousemove='mouseMove($event)'>
+                            ng-mousemove='mouseMove($event)' id='roots'>
                             <circle ng-repeat='root in fractalParams.roots'
                                 r='10'
                                 ng-attr-cx='{{reToX(root.root.Re)}}'
                                 ng-attr-cy='{{imToY(root.root.Im)}}'
                                 ng-mousedown='$parent.dragRoot = root'
                                 ng-mouseup='$parent.dragRoot = undefined'
-                                ng-mouseleave='$parent.dragRoot = undefined' />
+                                ng-mouseleave='$parent.dragRoot = undefined'
+                                ng-class='{"active": $parent.dragRoot === root}' />
                         </svg>
                     </div>
                 </div>

@@ -32,3 +32,14 @@ form {
     padding: 1em;
 }
 
+#roots circle {
+    fill: #268bd2;
+}
+
+#roots circle:hover {
+    fill: #b58900;
+}
+
+#roots circle.active {
+    fill: #dc322f;
+}

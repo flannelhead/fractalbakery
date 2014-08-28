@@ -83,13 +83,13 @@
             </div>
 
             <div class="pure-u-2-3" id="fractal">
-                <div class="pad1em">
+                <div class="pad1em" ng-style="{&apos;width&apos;: width, &apos;height&apos;: height}">
                     <div id="fractal-wrap">
                         <fractal-viewer id="viewer" params="fractalParams" ng-style="{&apos;width&apos;: width, &apos;height&apos;: height}">
                         </fractal-viewer>
 
-                        <svg ng-attr-width="{{width}}" ng-attr-height="{{height}}" ng-mousemove="mouseMove($event)">
-                            <circle ng-repeat="root in fractalParams.roots" r="10" ng-attr-cx="{{reToX(root.root.Re)}}" ng-attr-cy="{{imToY(root.root.Im)}}" ng-mousedown="$parent.dragRoot = root" ng-mouseup="$parent.dragRoot = undefined" ng-mouseleave="$parent.dragRoot = undefined"></circle>
+                        <svg ng-attr-width="{{width}}" ng-attr-height="{{height}}" ng-mousemove="mouseMove($event)" id="roots">
+                            <circle ng-repeat="root in fractalParams.roots" r="10" ng-attr-cx="{{reToX(root.root.Re)}}" ng-attr-cy="{{imToY(root.root.Im)}}" ng-mousedown="$parent.dragRoot = root" ng-mouseup="$parent.dragRoot = undefined" ng-mouseleave="$parent.dragRoot = undefined" ng-class="{&quot;active&quot;: $parent.dragRoot === root}"></circle>
                         </svg>
                     </div>
                 </div>
