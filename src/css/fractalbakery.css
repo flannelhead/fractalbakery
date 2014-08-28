@@ -18,14 +18,17 @@ form {
     width: 6em;
 }
 
-#fractal {
+#fractal-wrap {
     position: relative;
 }
 
 #fractal svg, #fractal fractal-viewer {
-    padding: 1em;
     position: absolute;
     top: 0;
     left: 0;
+}
+
+.pad1em {
+    padding: 1em;
 }
 

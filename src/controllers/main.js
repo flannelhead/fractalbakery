@@ -18,25 +18,45 @@ fb.controller('MainCtrl', ['$scope', function($scope) {
             { root: { Re:  1, Im: 0 }, hue: 0.667 }
         ]
     };
+    var fp = $scope.fractalParams;
 
     $scope.width = 800;
     $scope.height = 800;
     $scope.tolExponent = 10;
 
     $scope.updateTolerance = function() {
-        $scope.fractalParams.eps = Math.pow(10, -1 * $scope.tolExponent);
+        fp.eps = Math.pow(10, -1 * $scope.tolExponent);
     };
 
     $scope.reToX = function(Re) {
-        return $scope.width /
-            ($scope.fractalParams.reMax - $scope.fractalParams.reMin) *
-            (Re - $scope.fractalParams.reMin);
+        return $scope.width / (fp.reMax - fp.reMin) * (Re - fp.reMin);
     };
 
     $scope.imToY = function(Im) {
-        return $scope.height /
-            ($scope.fractalParams.imMax - $scope.fractalParams.imMin) *
-            (Im - $scope.fractalParams.imMin);
+        return $scope.height / (fp.imMax - fp.imMin) * (Im - fp.imMin);
+    };
+
+    $scope.xToRe = function(x) {
+        return (fp.reMax - fp.reMin) / $scope.width * x + fp.reMin;
+    };
+
+    $scope.yToIm = function(y) {
+        return (fp.imMax - fp.imMin) / $scope.height * y + fp.imMin;
+    };
+
+    $scope.mouseMove = function($event) {
+        if ($scope.dragRoot) {
+            var svg = jQuery($event.currentTarget),
+                offset = svg.offset(), win = jQuery(window);
+
+            var mouseX = $event.clientX - offset.left +
+                win.scrollLeft(),
+                mouseY = $event.clientY - offset.top +
+                win.scrollTop();
+
+            $scope.dragRoot.root.Re = $scope.xToRe(mouseX);
+            $scope.dragRoot.root.Im = $scope.yToIm(mouseY);
+        }
     };
 }]);
 

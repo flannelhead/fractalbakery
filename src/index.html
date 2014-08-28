@@ -94,15 +94,24 @@
             </div>
 
             <div class='pure-u-2-3' id='fractal'>
-                <fractal-viewer id='viewer' params='fractalParams'
-                    ng-style="{'width': width, 'height': height}">
-                </fractal-viewer>
+                <div class='pad1em'>
+                    <div id='fractal-wrap'>
+                        <fractal-viewer id='viewer' params='fractalParams'
+                            ng-style="{'width': width, 'height': height}">
+                        </fractal-viewer>
 
-                <svg ng-attr-width='{{width}}' ng-attr-height='{{height}}'>
-                    <circle ng-repeat='root in fractalParams.roots' r='6'
-                        ng-attr-cx='{{reToX(root.root.Re)}}'
-                        ng-attr-cy='{{imToY(root.root.Im)}}' />
-                </svg>
+                        <svg ng-attr-width='{{width}}' ng-attr-height='{{height}}'
+                            ng-mousemove='mouseMove($event)'>
+                            <circle ng-repeat='root in fractalParams.roots'
+                                r='10'
+                                ng-attr-cx='{{reToX(root.root.Re)}}'
+                                ng-attr-cy='{{imToY(root.root.Im)}}'
+                                ng-mousedown='$parent.dragRoot = root'
+                                ng-mouseup='$parent.dragRoot = undefined'
+                                ng-mouseleave='$parent.dragRoot = undefined' />
+                        </svg>
+                    </div>
+                </div>
             </div>
         </div>
     </body>
