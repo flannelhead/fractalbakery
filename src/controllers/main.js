@@ -20,8 +20,8 @@ fb.controller('MainCtrl', ['$scope', function($scope) {
     };
     var fp = $scope.fractalParams;
 
-    $scope.width = 800;
-    $scope.height = 800;
+    $scope.width = 650;
+    $scope.height = 650;
     $scope.tolExponent = 10;
 
     $scope.updateTolerance = function() {
