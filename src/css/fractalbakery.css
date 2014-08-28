@@ -6,7 +6,7 @@ body {
     font-family: 'Roboto', sans-serif;
 }
 
-fractal-viewer, form {
+form {
     padding: 1em;
 }
 
@@ -16,5 +16,16 @@ fractal-viewer, form {
 
 .mednum {
     width: 6em;
+}
+
+#fractal {
+    position: relative;
+}
+
+#fractal svg, #fractal fractal-viewer {
+    padding: 1em;
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 

@@ -93,10 +93,16 @@
                 </form>
             </div>
 
-            <div class='pure-u-2-3'>
+            <div class='pure-u-2-3' id='fractal'>
                 <fractal-viewer id='viewer' params='fractalParams'
                     ng-style="{'width': width, 'height': height}">
                 </fractal-viewer>
+
+                <svg ng-attr-width='{{width}}' ng-attr-height='{{height}}'>
+                    <circle ng-repeat='root in fractalParams.roots' r='6'
+                        ng-attr-cx='{{reToX(root.root.Re)}}'
+                        ng-attr-cy='{{imToY(root.root.Im)}}' />
+                </svg>
             </div>
         </div>
     </body>

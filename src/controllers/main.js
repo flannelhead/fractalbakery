@@ -26,6 +26,18 @@ fb.controller('MainCtrl', ['$scope', function($scope) {
     $scope.updateTolerance = function() {
         $scope.fractalParams.eps = Math.pow(10, -1 * $scope.tolExponent);
     };
+
+    $scope.reToX = function(Re) {
+        return $scope.width /
+            ($scope.fractalParams.reMax - $scope.fractalParams.reMin) *
+            (Re - $scope.fractalParams.reMin);
+    };
+
+    $scope.imToY = function(Im) {
+        return $scope.height /
+            ($scope.fractalParams.imMax - $scope.fractalParams.imMin) *
+            (Im - $scope.fractalParams.imMin);
+    };
 }]);
 
 })();
