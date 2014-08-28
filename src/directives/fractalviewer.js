@@ -9,7 +9,7 @@ angular.module('fractalBakery').directive('fractalViewer', ['fractalRenderer',
             params: '=params'
         },
         link: function(scope, element, attrs) {
-            var division = 3, previewSize = 150;
+            var division = 3, previewSize = 100;
             element.addClass('fractalviewer');
 
             scope.$watch('params', render, true);
