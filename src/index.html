@@ -76,7 +76,7 @@
                 <form class='pure-form pure-form-aligned'>
                     <legend>Roots</legend>
 
-                    <a href='#' ng-repeat='root in fractalParams.roots'
+                    <a href='#rootEditorTitle' ng-repeat='root in fractalParams.roots'
                         ng-class="{
                             'pure-button': true,
                             'pure-button-active': root === $parent.activeRoot
@@ -85,7 +85,7 @@
                         {{$index + 1}}
                     </a>
 
-                    <legend>Root {{fractalParams.roots.indexOf(activeRoot) + 1}}
+                    <legend id='rootEditorTitle'>Root {{fractalParams.roots.indexOf(activeRoot) + 1}}
                         parameters</legend>
                     <div class='pure-control-group'>
                         <label>Position:</label>
