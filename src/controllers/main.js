@@ -60,6 +60,10 @@ fb.controller('MainCtrl', ['$scope', function($scope) {
             $scope.dragRoot.root.Im = $scope.yToIm(mouseY);
         }
     };
+
+    $scope.rootColour = function(root) {
+        return 'hsl(' + Math.round(root.hue * 360) + ',80%,60%)';
+    };
 }]);
 
 })();

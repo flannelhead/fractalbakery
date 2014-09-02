@@ -77,10 +77,11 @@
                     <legend>Roots</legend>
 
                     <a href='#' ng-repeat='root in fractalParams.roots'
-                        ng-class='{
-                            "pure-button": true,
-                            "pure-button-active": root === $parent.activeRoot
-                        }' ng-click='$parent.activeRoot = root'>
+                        ng-class="{
+                            'pure-button': true,
+                            'pure-button-active': root === $parent.activeRoot
+                            }" ng-click='$parent.activeRoot = root'
+                            ng-style="{'background': rootColour(root)}">
                         {{$index + 1}}
                     </a>
 
