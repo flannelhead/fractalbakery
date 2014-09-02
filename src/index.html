@@ -89,7 +89,8 @@
                     </a>
 
                     <div class='pure-controls'>
-                        <button class='pure-button pure-button-primary button-success'>
+                        <button class='pure-button pure-button-primary button-success'
+                            ng-click='addNewRoot()'>
                             <i class='fa fa-plus'></i>
                             Add a root
                         </button>
@@ -116,7 +117,8 @@
 
                         <div class='pure-controls'>
                             <button class='pure-button button-error
-                                pure-button-primary'>
+                                pure-button-primary'
+                                ng-click='removeActiveRoot()'>
                                 <i class='fa fa-trash-o'></i>
                                 Remove root {{fractalParams.roots.indexOf(activeRoot) + 1}}
                             </button>

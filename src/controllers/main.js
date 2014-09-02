@@ -64,6 +64,34 @@ fb.controller('MainCtrl', ['$scope', function($scope) {
     $scope.rootColour = function(root) {
         return 'hsl(' + Math.round(root.hue * 360) + ',80%,60%)';
     };
+
+    function randomQuantized(N) {
+        return Math.floor(Math.random() * N) / N;
+    }
+
+    $scope.addNewRoot = function() {
+        var newRoot = {
+            root: {
+                Re: fp.reMin + randomQuantized(100) * (fp.reMax - fp.reMin),
+                Im: fp.imMin + randomQuantized(100) * (fp.imMax - fp.imMin)
+            },
+
+            hue: randomQuantized(100)
+        };
+        fp.roots.push(newRoot);
+        $scope.activeRoot = newRoot;
+    };
+
+    $scope.removeActiveRoot = function() {
+        if (fp.roots.length === 2) {
+            alert('Must have at least one root.');
+            return;
+        }
+
+        var index = fp.roots.indexOf($scope.activeRoot);
+        fp.roots.splice(index, 1);
+        $scope.activeRoot = fp.roots[0];
+    };
 }]);
 
 })();
