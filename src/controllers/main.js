@@ -45,10 +45,10 @@ fb.controller('MainCtrl', ['$scope', function($scope) {
         return (fp.imMax - fp.imMin) / $scope.height * y + fp.imMin;
     };
 
+    var fractalViewer = jQuery('#fractal fractal-viewer'), win = jQuery(window);
     $scope.mouseMove = function($event) {
         if ($scope.dragRoot) {
-            var svg = jQuery($event.currentTarget),
-                offset = svg.offset(), win = jQuery(window);
+            var offset = fractalViewer.offset();
 
             var mouseX = $event.clientX - offset.left +
                 win.scrollLeft(),

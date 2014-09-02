@@ -6,7 +6,7 @@
 
         <title>Fractal Bakery | Roll your own fractals</title>
 
-        <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400">
         
         
         <link rel="stylesheet" href="fractalbakery.min.css">
@@ -89,7 +89,7 @@
                         </fractal-viewer>
 
                         <svg ng-attr-width="{{width}}" ng-attr-height="{{height}}" ng-mousemove="mouseMove($event)" id="roots">
-                            <circle ng-repeat="root in fractalParams.roots" r="10" ng-attr-cx="{{reToX(root.root.Re)}}" ng-attr-cy="{{imToY(root.root.Im)}}" ng-mousedown="$parent.dragRoot = root" ng-mouseup="$parent.dragRoot = undefined" ng-mouseleave="$parent.dragRoot = undefined" ng-class="{&quot;active&quot;: $parent.dragRoot === root}"></circle>
+                            <circle ng-repeat="root in fractalParams.roots" r="10" ng-attr-cx="{{reToX(root.root.Re)}}" ng-attr-cy="{{imToY(root.root.Im)}}" ng-mousedown="$event.preventDefault(); $parent.dragRoot = root" ng-mouseup="$parent.dragRoot = undefined" ng-mouseleave="$parent.dragRoot = undefined" ng-class="{&quot;active&quot;: $parent.dragRoot === root}"></circle>
                         </svg>
                     </div>
                 </div>
