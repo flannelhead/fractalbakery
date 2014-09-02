@@ -30,7 +30,7 @@
         <div ng-controller='MainCtrl' class='pure-g'>
             <div class='pure-u-1-3'>
                 <form class='pure-form pure-form-aligned'>
-                    <legend>Fractal parameters</legend>
+                    <legend>General parameters</legend>
 
                     <fieldset>
                         <div class='pure-control-group'>
@@ -76,13 +76,13 @@
                 <form class='pure-form pure-form-aligned'>
                     <legend>Roots</legend>
 
-                    <button ng-repeat='root in fractalParams.roots'
+                    <a href='#' ng-repeat='root in fractalParams.roots'
                         ng-class='{
                             "pure-button": true,
                             "pure-button-active": root === $parent.activeRoot
                         }' ng-click='$parent.activeRoot = root'>
                         {{$index + 1}}
-                    </button><br />
+                    </a>
 
                     <legend>Root {{fractalParams.roots.indexOf(activeRoot) + 1}}
                         parameters</legend>

@@ -10,7 +10,7 @@ fb.controller('MainCtrl', ['$scope', function($scope) {
         reMin: -2,
         reMax: 2,
         imMin: 2,
-        imMax: -2,
+        imMax: -1,
 
         roots: [
             { root: { Re: -1, Im: 0 }, hue: 0 },
@@ -21,8 +21,8 @@ fb.controller('MainCtrl', ['$scope', function($scope) {
     };
     var fp = $scope.fractalParams;
 
-    $scope.width = 650;
-    $scope.height = 650;
+    $scope.width = 800;
+    $scope.height = 600;
     $scope.tolExponent = 10;
     $scope.activeRoot = fp.roots[0];
 
