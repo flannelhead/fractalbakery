@@ -85,20 +85,35 @@
                         {{$index + 1}}
                     </a>
 
+                    <div class='pure-controls'>
+                        <button class='pure-button pure-button-primary button-success'>
+                            Add a root
+                        </button>
+                    </div>
+
                     <legend id='rootEditorTitle'>Root {{fractalParams.roots.indexOf(activeRoot) + 1}}
                         parameters</legend>
-                    <div class='pure-control-group'>
-                        <label>Position:</label>
-                        <input type='number' class='mednum' step='any'
-                            ng-model='activeRoot.root.Re' required /> +
-                        <input type='number' class='mednum' step='any'
-                            ng-model='activeRoot.root.Im' required />i
-                    </div>
-                    <div class='pure-control-group'>
-                        <label>Hue (0–1):</label>
-                        <input type='number' class='mednum' required step='any'
-                            ng-model='activeRoot.hue' min='0' max='1' />
-                    </div>
+                    <fieldset>
+                        <div class='pure-control-group'>
+                            <label>Position:</label>
+                            <input type='number' class='mednum' step='any'
+                                ng-model='activeRoot.root.Re' required /> +
+                            <input type='number' class='mednum' step='any'
+                                ng-model='activeRoot.root.Im' required />i
+                        </div>
+                        <div class='pure-control-group'>
+                            <label>Hue (0–1):</label>
+                            <input type='number' class='mednum' required step='any'
+                                ng-model='activeRoot.hue' min='0' max='1' />
+                        </div>
+
+                        <div class='pure-controls'>
+                            <button class='pure-button button-error
+                                pure-button-primary'>
+                                Remove root {{fractalParams.roots.indexOf(activeRoot) + 1}}
+                            </button>
+                        </div>
+                    </fieldset>
                 </form>
             </div>
 

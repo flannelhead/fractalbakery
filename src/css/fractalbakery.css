@@ -43,3 +43,12 @@ form {
 #roots circle.active {
     fill: #dc322f;
 }
+
+.button-success {
+    background: rgb(28, 184, 65);
+}
+
+.button-error {
+    background: rgb(202, 60, 60);
+}
+
