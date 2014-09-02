@@ -24,6 +24,7 @@ fb.controller('MainCtrl', ['$scope', function($scope) {
     $scope.width = 650;
     $scope.height = 650;
     $scope.tolExponent = 10;
+    $scope.activeRoot = fp.roots[0];
 
     $scope.updateTolerance = function() {
         fp.eps = Math.pow(10, -1 * $scope.tolExponent);
