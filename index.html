@@ -31,53 +31,59 @@
         <div ng-controller="MainCtrl" class="pure-g">
             <div class="pure-u-1-3">
                 <form class="pure-form pure-form-aligned">
-                    <legend>Fractal parameters</legend>
+                    <legend>General parameters</legend>
 
                     <fieldset>
                         <div class="pure-control-group">
                             <label for="maxIter">Max. iteration count:</label>
-                            <input type="number" ng-model="fractalParams.maxIter" min="1" required id="maxIter" class="mednum">
+                            <input type="number" ng-model="fractalParams.maxIter" min="1" required id="maxIter" class="shortnum" step="1">
                         </div>
                         <div class="pure-control-group">
                             <label for="eps">Tolerance:</label>
-                            10^(-<input type="number" ng-model="tolExponent" min="0" required id="eps" class="shortnum" ng-change="updateTolerance()">)
+                            10^(-<input type="number" ng-model="tolExponent" min="0" required id="eps" class="shortnum" ng-change="updateTolerance()" step="1">)
                         </div>
                         <div class="pure-control-group">
                             <label>Width:</label>
-                            <input type="number" ng-model="width" class="mednum" min="3" required> px
+                            <input type="number" ng-model="width" class="mednum" min="3" required step="1"> px
                         </div>
                         <div class="pure-control-group">
                             <label>Height:</label>
-                            <input type="number" ng-model="height" class="mednum" min="3" required> px
+                            <input type="number" ng-model="height" class="mednum" min="3" required step="1"> px
                         </div>
 
                         <div class="pure-control-group">
                             <label>Top left corner:</label>
-                            <input type="number" class="shortnum" ng-model="fractalParams.reMin" required> +
-                            <input type="number" class="shortnum" ng-model="fractalParams.imMin" required>i
+                            <input type="number" class="mednum" step="any" ng-model="fractalParams.reMin" required> +
+                            <input type="number" class="mednum" step="any" ng-model="fractalParams.imMin" required>i
                         </div>
                         <div class="pure-control-group">
                             <label>Bottom right corner:</label>
-                            <input type="number" class="shortnum" ng-model="fractalParams.reMax" required> +
-                            <input type="number" class="shortnum" ng-model="fractalParams.imMax" required>i
+                            <input type="number" class="mednum" step="any" ng-model="fractalParams.reMax" required> +
+                            <input type="number" class="mednum" step="any" ng-model="fractalParams.imMax" required>i
                         </div>
                     </fieldset>
                 </form>
 
                 <form class="pure-form pure-form-aligned">
-                    <div ng-repeat="root in fractalParams.roots">
-                        <legend>Root {{$index}}</legend>
-                        <fieldset>
-                            <div class="pure-control-group">
-                                <label>Position:</label>
-                                <input type="number" class="shortnum" ng-model="root.root.Re" required> +
-                                <input type="number" class="shortnum" ng-model="root.root.Im" required>i
-                            </div>
-                            <div class="pure-control-group">
-                                <label>Hue (0-1):</label>
-                                <input type="number" class="mednum" required ng-model="root.hue" min="0" max="1">
-                            </div>
-                        </fieldset>
+                    <legend>Roots</legend>
+
+                    <a href="#rootEditorTitle" ng-repeat="root in fractalParams.roots" ng-class="{
+                            &apos;pure-button&apos;: true,
+                            &apos;pure-button-active&apos;: root === $parent.activeRoot
+                            }" ng-click="$parent.activeRoot = root" ng-style="{&apos;background&apos;: rootColour(root)}">
+                        {{$index + 1}}
+                    </a>
+
+                    <legend id="rootEditorTitle">Root {{fractalParams.roots.indexOf(activeRoot) + 1}}
+                        parameters</legend>
+                    <div class="pure-control-group">
+                        <label>Position:</label>
+                        <input type="number" class="mednum" step="any" ng-model="activeRoot.root.Re" required> +
+                        <input type="number" class="mednum" step="any" ng-model="activeRoot.root.Im" required>i
+                    </div>
+                    <div class="pure-control-group">
+                        <label>Hue (0–1):</label>
+                        <input type="number" class="mednum" required step="any" ng-model="activeRoot.hue" min="0" max="1">
                     </div>
                 </form>
             </div>
@@ -89,7 +95,9 @@
                         </fractal-viewer>
 
                         <svg ng-attr-width="{{width}}" ng-attr-height="{{height}}" ng-mousemove="mouseMove($event)" id="roots">
-                            <circle ng-repeat="root in fractalParams.roots" r="10" ng-attr-cx="{{reToX(root.root.Re)}}" ng-attr-cy="{{imToY(root.root.Im)}}" ng-mousedown="$event.preventDefault(); $parent.dragRoot = root" ng-mouseup="$parent.dragRoot = undefined" ng-mouseleave="$parent.dragRoot = undefined" ng-class="{&quot;active&quot;: $parent.dragRoot === root}"></circle>
+                            <circle ng-repeat="root in fractalParams.roots" r="10" ng-attr-cx="{{reToX(root.root.Re)}}" ng-attr-cy="{{imToY(root.root.Im)}}" ng-mousedown="$event.preventDefault();
+                                    $parent.dragRoot = root;
+                                    $parent.activeRoot = root;" ng-mouseup="$parent.dragRoot = undefined;" ng-mouseleave="$parent.dragRoot = undefined" ng-class="{&quot;active&quot;: $parent.dragRoot === root}"></circle>
                         </svg>
                     </div>
                 </div>
