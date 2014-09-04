@@ -144,7 +144,7 @@
                             ng-attr-height='{{height}}'
                             ng-mousemove='mouseMove($event)' id='roots'
                             ng-mousedown='beginZooming($event)'
-                            ng-mouseup='zoomIn($event)'>
+                            ng-mouseup='zoomToMouse($event)'>
                             <circle ng-repeat='root in fractalParams.roots'
                                 r='10'
                                 ng-attr-cx='{{reToX(root.root.Re)}}'

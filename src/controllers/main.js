@@ -78,8 +78,23 @@ fb.controller('MainCtrl', ['$scope', function($scope) {
         }
     };
 
+    function preserveAspect(startPoint, endPoint) {
+        var dx = endPoint.x - startPoint.x,
+            dy = endPoint.y - startPoint.y;
+
+        var newDy = Math.abs(dx) * $scope.height / $scope.width;
+        if (dy < 0) newDy *= -1;
+        return {
+            x: endPoint.x,
+            y: startPoint.y + newDy
+        };
+    }
+
     function updateZoomPath($event) {
         var endPoint = mouseCoords($event);
+        if (!$event.ctrlKey) {
+            endPoint = preserveAspect($scope.zoomBegin, endPoint);
+        }
         $scope.zoomPath = 'M' + ($scope.zoomBegin.x + 0.5) + ',' +
             ($scope.zoomBegin.y + 0.5) + ' H' + (endPoint.x + 0.5) + ' V' +
             (endPoint.y + 0.5) + ' H' + ($scope.zoomBegin.x + 0.5) + ' z';
@@ -134,21 +149,25 @@ fb.controller('MainCtrl', ['$scope', function($scope) {
         };
     };
 
-    $scope.zoomIn = function($event) {
+    $scope.zoomToMouse = function($event) {
         if (!$scope.zooming) return;
 
         $scope.zooming = false;
         $scope.zoomPath = 'M0,0';
 
-        var point = mouseToComplex(mouseCoords($event));
+        var point = mouseCoords($event);
+        if (!$event.ctrlKey) {
+            point = preserveAspect($scope.zoomBegin, point);
+        }
+        var complex = mouseToComplex(point);
 
         $scope.zoomStack.push(fp.bounds);
 
         fp.bounds = {
-            reMin: Math.min($scope.zoomBegin.Re, point.Re),
-            reMax: Math.max($scope.zoomBegin.Re, point.Re),
-            imMin: Math.max($scope.zoomBegin.Im, point.Im),
-            imMax: Math.min($scope.zoomBegin.Im, point.Im)
+            reMin: Math.min($scope.zoomBegin.Re, complex.Re),
+            reMax: Math.max($scope.zoomBegin.Re, complex.Re),
+            imMin: Math.max($scope.zoomBegin.Im, complex.Im),
+            imMax: Math.min($scope.zoomBegin.Im, complex.Im)
         };
     };
 
