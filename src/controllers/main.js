@@ -159,6 +159,9 @@ fb.controller('MainCtrl', ['$scope', function($scope) {
         if (!$event.ctrlKey) {
             point = preserveAspect($scope.zoomBegin, point);
         }
+        if (point.x === $scope.zoomBegin.x || point.y === $scope.zoomBegin.y) {
+            return;
+        }
         var complex = mouseToComplex(point);
 
         $scope.zoomStack.push(fp.bounds);
