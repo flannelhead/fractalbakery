@@ -130,7 +130,8 @@
                     <div class='buttonrow'>
                         <button class='pure-button pure-button-primary'
                             title='Restore previous zoom state'
-                            ng-click='restorePreviousZoom()'>
+                            ng-click='restorePreviousZoom()'
+                            ng-disabled='zoomStack.length === 0'>
                             <i class='fa fa-undo'></i>
                         </button>
                     </div>
