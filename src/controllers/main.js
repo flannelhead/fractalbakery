@@ -138,7 +138,7 @@ fb.controller('MainCtrl', ['$scope', function($scope) {
         if (!$scope.zooming) return;
 
         $scope.zooming = false;
-        $scope.zoomPath = '';
+        $scope.zoomPath = 'M0,0';
 
         var point = mouseToComplex(mouseCoords($event));
 
