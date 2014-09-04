@@ -46,20 +46,38 @@ fb.controller('MainCtrl', ['$scope', function($scope) {
         return (fp.imMax - fp.imMin) / $scope.height * y + fp.imMin;
     };
 
+    function mouseToComplex(mouse) {
+        return {
+            Re: $scope.xToRe(mouse.x),
+            Im: $scope.yToIm(mouse.y)
+        };
+    }
+
     var fractalViewer = jQuery('#fractal fractal-viewer'), win = jQuery(window);
+    function mouseCoords($event) {
+        var offset = fractalViewer.offset();
+        return {
+            x: $event.clientX - offset.left + win.scrollLeft(),
+            y: $event.clientY - offset.top + win.scrollTop()
+        };
+    }
+
     $scope.mouseMove = function($event) {
         if ($scope.dragRoot) {
-            var offset = fractalViewer.offset();
-
-            var mouseX = $event.clientX - offset.left +
-                win.scrollLeft(),
-                mouseY = $event.clientY - offset.top +
-                win.scrollTop();
-
+            var mouse = mouseCoords($event);
             $scope.dragRoot.root.Re = $scope.xToRe(mouseX);
             $scope.dragRoot.root.Im = $scope.yToIm(mouseY);
+        } else if ($scope.zooming) {
+            updateZoomPath($event);
         }
     };
+
+    function updateZoomPath($event) {
+        var endPoint = mouseCoords($event);
+        $scope.zoomPath = 'M' + ($scope.zoomBegin.x + 0.5) + ',' +
+            ($scope.zoomBegin.y + 0.5) + ' H' + (endPoint.x + 0.5) + ' V' +
+            (endPoint.y + 0.5) + ' H' + ($scope.zoomBegin.x + 0.5) + ' z';
+    }
 
     $scope.rootColour = function(root) {
         return 'hsl(' + Math.round(root.hue * 360) + ',80%,60%)';
@@ -91,6 +109,35 @@ fb.controller('MainCtrl', ['$scope', function($scope) {
         var index = fp.roots.indexOf($scope.activeRoot);
         fp.roots.splice(index, 1);
         $scope.activeRoot = fp.roots[0];
+    };
+
+    $scope.beginZooming = function($event) {
+        if ($scope.zooming) return;
+
+        $scope.zooming = true;
+
+        var point = mouseCoords($event),
+            complex = mouseToComplex(point);
+        $scope.zoomBegin = {
+            Re: complex.Re,
+            Im: complex.Im,
+            x: point.x,
+            y: point.y
+        };
+    };
+
+    $scope.zoomIn = function($event) {
+        if (!$scope.zooming) return;
+
+        $scope.zooming = false;
+        $scope.zoomPath = '';
+
+        var point = mouseToComplex(mouseCoords($event));
+
+        fp.reMin = Math.min($scope.zoomBegin.Re, point.Re);
+        fp.reMax = Math.max($scope.zoomBegin.Re, point.Re);
+        fp.imMin = Math.max($scope.zoomBegin.Im, point.Im);
+        fp.imMax = Math.min($scope.zoomBegin.Im, point.Im);
     };
 }]);
 
