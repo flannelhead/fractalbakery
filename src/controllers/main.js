@@ -177,6 +177,11 @@ fb.controller('MainCtrl', ['$scope', function($scope) {
     $scope.restorePreviousZoom = function() {
         fp.bounds = $scope.zoomStack.pop();
     };
+    
+    $scope.restoreDefaultZoom = function() {
+        fp.bounds = $scope.zoomStack.shift();
+        $scope.zoomStack = [];
+    };
 }]);
 
 })();
