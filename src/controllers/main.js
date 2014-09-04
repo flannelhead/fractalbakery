@@ -64,9 +64,7 @@ fb.controller('MainCtrl', ['$scope', function($scope) {
 
     $scope.mouseMove = function($event) {
         if ($scope.dragRoot) {
-            var mouse = mouseCoords($event);
-            $scope.dragRoot.root.Re = $scope.xToRe(mouseX);
-            $scope.dragRoot.root.Im = $scope.yToIm(mouseY);
+            $scope.dragRoot.root = mouseToComplex(mouseCoords($event));
         } else if ($scope.zooming) {
             updateZoomPath($event);
         }

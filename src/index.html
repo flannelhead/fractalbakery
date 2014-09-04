@@ -142,7 +142,8 @@
                                 r='10'
                                 ng-attr-cx='{{reToX(root.root.Re)}}'
                                 ng-attr-cy='{{imToY(root.root.Im)}}'
-                                ng-mousedown='$event.preventDefault();
+                                ng-mousedown='$event.stopPropagation();
+                                    $event.preventDefault();
                                     $parent.dragRoot = root;
                                     $parent.activeRoot = root;'
                                 ng-mouseup='$parent.dragRoot = undefined;'
