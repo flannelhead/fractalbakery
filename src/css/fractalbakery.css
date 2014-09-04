@@ -32,8 +32,13 @@ form {
     padding: 1em;
 }
 
+#roots {
+    cursor: crosshair;
+}
+
 #roots circle {
     fill: #268bd2;
+    cursor: move;
 }
 
 #roots circle:hover {
