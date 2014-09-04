@@ -28,6 +28,8 @@ fb.controller('MainCtrl', ['$scope', function($scope) {
     $scope.tolExponent = 10;
     $scope.activeRoot = fp.roots[0];
 
+    $scope.zoomStack = [];
+
     $scope.updateTolerance = function() {
         fp.eps = Math.pow(10, -1 * $scope.tolExponent);
     };
@@ -140,10 +142,18 @@ fb.controller('MainCtrl', ['$scope', function($scope) {
 
         var point = mouseToComplex(mouseCoords($event));
 
-        fp.bounds.reMin = Math.min($scope.zoomBegin.Re, point.Re);
-        fp.bounds.reMax = Math.max($scope.zoomBegin.Re, point.Re);
-        fp.bounds.imMin = Math.max($scope.zoomBegin.Im, point.Im);
-        fp.bounds.imMax = Math.min($scope.zoomBegin.Im, point.Im);
+        $scope.zoomStack.push(fp.bounds);
+
+        fp.bounds = {
+            reMin: Math.min($scope.zoomBegin.Re, point.Re),
+            reMax: Math.max($scope.zoomBegin.Re, point.Re),
+            imMin: Math.max($scope.zoomBegin.Im, point.Im),
+            imMax: Math.min($scope.zoomBegin.Im, point.Im)
+        };
+    };
+
+    $scope.restorePreviousZoom = function() {
+        fp.bounds = $scope.zoomStack.pop();
     };
 }]);
 

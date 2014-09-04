@@ -57,3 +57,8 @@ svg path {
     stroke: black;
 }
 
+.buttonrow {
+    text-align: right;
+    padding-bottom: 0.5em;
+}
+
