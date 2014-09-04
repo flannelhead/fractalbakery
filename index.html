@@ -113,6 +113,9 @@
             <div class="pure-u-2-3" id="fractal">
                 <div class="pad1em" ng-style="{&quot;width&quot;: width}">
                     <div class="buttonrow">
+                        <button class="pure-button" title="Restore default zoom" ng-click="restoreDefaultZoom()" ng-disabled="zoomStack.length === 0">
+                            Reset zoom    
+                        </button>
                         <button class="pure-button pure-button-primary" title="Restore previous zoom state" ng-click="restorePreviousZoom()" ng-disabled="zoomStack.length === 0">
                             <i class="fa fa-undo"></i> Undo zoom
                         </button>
