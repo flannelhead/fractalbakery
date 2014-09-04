@@ -67,3 +67,15 @@ svg path {
     padding-bottom: 0.5em;
 }
 
+.header {
+    margin: 0.5em;
+    margin-bottom: 0;
+    font-size: 2em;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.footer {
+    margin: 0.5em 1em;
+    text-align: right;
+}
+
