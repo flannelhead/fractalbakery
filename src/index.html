@@ -10,7 +10,6 @@
         <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
         <!--(if target dev)><!-->
         <link rel='stylesheet' href='../bower_components/pure/pure.css' />
-        <link rel='stylesheet' href='../bower_components/fontawesome/css/font-awesome.css' />
 
         <link rel='stylesheet' href='css/fractalviewer.css' />
         <link rel='stylesheet' href='css/fractalbakery.css' />
@@ -61,16 +60,16 @@
                         <div class='pure-control-group'>
                             <label>Top left corner:</label>
                             <input type='number' class='mednum' step='any'
-                                ng-model='fractalParams.reMin' required /> +
+                                ng-model='fractalParams.bounds.reMin' required /> +
                             <input type='number' class='mednum' step='any'
-                                ng-model='fractalParams.imMin' required />i
+                                ng-model='fractalParams.bounds.imMin' required />i
                         </div>
                         <div class='pure-control-group'>
                             <label>Bottom right corner:</label>
                             <input type='number' class='mednum' step='any'
-                                ng-model='fractalParams.reMax' required /> +
+                                ng-model='fractalParams.bounds.reMax' required /> +
                             <input type='number' class='mednum' step='any'
-                                ng-model='fractalParams.imMax' required />i
+                                ng-model='fractalParams.bounds.imMax' required />i
                         </div>
                     </fieldset>
                 </form>
@@ -158,3 +157,4 @@
         </div>
     </body>
 </html>
+

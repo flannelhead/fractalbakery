@@ -13,8 +13,8 @@ angular.module('fractalBakery').directive('fractalViewer', ['fractalRenderer',
             element.addClass('fractalviewer');
 
             scope.$watch('params', render, true);
-            scope.$watchGroup([ 'params.reMax', 'params.reMin', 'params.imMax',
-                'params.imMin' ], updateSize);
+            scope.$watchGroup([ 'params.bounds.reMax', 'params.bounds.reMin',
+                'params.bounds.imMax', 'params.bounds.imMin' ], updateSize);
             scope.$watch(function() { return element.width(); },
                 updateSize);
             scope.$watch(function() { return element.height(); },
@@ -44,13 +44,15 @@ angular.module('fractalBakery').directive('fractalViewer', ['fractalRenderer',
             }
 
             function renderBlock(x, y, w, h, exposure) {
-                var reMin = params.reMin + reScale * x,
-                    imMin = params.imMin + imScale * y;
+                var reMin = params.bounds.reMin + reScale * x,
+                    imMin = params.bounds.imMin + imScale * y;
                 var config = {
-                    reMin: reMin,
-                    imMin: imMin,
-                    reMax: reMin + reScale * w,
-                    imMax: imMin + imScale * h,
+                    bounds: {
+                        reMin: reMin,
+                        imMin: imMin,
+                        reMax: reMin + reScale * w,
+                        imMax: imMin + imScale * h
+                    },
 
                     eps: params.eps,
                     maxIter: params.maxIter,
@@ -95,9 +97,9 @@ angular.module('fractalBakery').directive('fractalViewer', ['fractalRenderer',
                 blockHeight = Math.floor(height / division);
                 lastBlockWidth = width - (division - 1) * blockWidth;
                 lastBlockHeight = height - (division - 1) * blockHeight;
-                reScale = (scope.params.reMax - scope.params.reMin) /
+                reScale = (params.bounds.reMax - params.bounds.reMin) /
                     (width - 1);
-                imScale = (scope.params.imMax - scope.params.imMin) /
+                imScale = (params.bounds.imMax - params.bounds.imMin) /
                     (height - 1);
                 previewCanvas.attr('width', previewWidth);
                 previewCanvas.attr('height', previewHeight);

@@ -7,10 +7,12 @@ fb.controller('MainCtrl', ['$scope', function($scope) {
         eps: 1e-10,
         maxIter: 25,
 
-        reMin: -2,
-        reMax: 2,
-        imMin: 2,
-        imMax: -1,
+        bounds: {
+            reMin: -2,
+            reMax: 2,
+            imMin: 2,
+            imMax: -1
+        },
 
         roots: [
             { root: { Re: -1, Im: 0 }, hue: 0 },
@@ -31,19 +33,23 @@ fb.controller('MainCtrl', ['$scope', function($scope) {
     };
 
     $scope.reToX = function(Re) {
-        return $scope.width / (fp.reMax - fp.reMin) * (Re - fp.reMin);
+        return $scope.width / (fp.bounds.reMax - fp.bounds.reMin) *
+            (Re - fp.bounds.reMin);
     };
 
     $scope.imToY = function(Im) {
-        return $scope.height / (fp.imMax - fp.imMin) * (Im - fp.imMin);
+        return $scope.height / (fp.bounds.imMax - fp.bounds.imMin) *
+            (Im - fp.bounds.imMin);
     };
 
     $scope.xToRe = function(x) {
-        return (fp.reMax - fp.reMin) / $scope.width * x + fp.reMin;
+        return (fp.bounds.reMax - fp.bounds.reMin) / $scope.width * x +
+            fp.bounds.reMin;
     };
 
     $scope.yToIm = function(y) {
-        return (fp.imMax - fp.imMin) / $scope.height * y + fp.imMin;
+        return (fp.bounds.imMax - fp.bounds.imMin) / $scope.height * y +
+            fp.bounds.imMin;
     };
 
     function mouseToComplex(mouse) {
@@ -88,8 +94,10 @@ fb.controller('MainCtrl', ['$scope', function($scope) {
     $scope.addNewRoot = function() {
         var newRoot = {
             root: {
-                Re: fp.reMin + randomQuantized(100) * (fp.reMax - fp.reMin),
-                Im: fp.imMin + randomQuantized(100) * (fp.imMax - fp.imMin)
+                Re: fp.bounds.reMin + randomQuantized(100) *
+                    (fp.bounds.reMax - fp.bounds.reMin),
+                Im: fp.bounds.imMin + randomQuantized(100) *
+                    (fp.bounds.imMax - fp.bounds.imMin)
             },
 
             hue: randomQuantized(100)
@@ -132,10 +140,10 @@ fb.controller('MainCtrl', ['$scope', function($scope) {
 
         var point = mouseToComplex(mouseCoords($event));
 
-        fp.reMin = Math.min($scope.zoomBegin.Re, point.Re);
-        fp.reMax = Math.max($scope.zoomBegin.Re, point.Re);
-        fp.imMin = Math.max($scope.zoomBegin.Im, point.Im);
-        fp.imMax = Math.min($scope.zoomBegin.Im, point.Im);
+        fp.bounds.reMin = Math.min($scope.zoomBegin.Re, point.Re);
+        fp.bounds.reMax = Math.max($scope.zoomBegin.Re, point.Re);
+        fp.bounds.imMin = Math.max($scope.zoomBegin.Im, point.Im);
+        fp.bounds.imMax = Math.min($scope.zoomBegin.Im, point.Im);
     };
 }]);
 

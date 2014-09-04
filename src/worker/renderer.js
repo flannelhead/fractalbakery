@@ -1,8 +1,8 @@
 var renderer = {
     render: function(imageData, config, width, height, givenExposure) {
         var data = imageData.data;
-        var reStep = (config.reMax - config.reMin) / (width - 1),
-            imStep = (config.imMax - config.imMin) / (height  - 1),
+        var reStep = (config.bounds.reMax - config.bounds.reMin) / (width - 1),
+            imStep = (config.bounds.imMax - config.bounds.imMin) / (height  - 1),
             poly = ComplexPolynomial.fromRoots(config.roots.map(function(root) {
                 return new Complex(root.root.Re, root.root.Im);
             })),
@@ -13,9 +13,9 @@ var renderer = {
 
         for (var i = 0; i < height; i++) {
             for (var j = 0; j < width; j++) {
-                field.push(newton.iterate(new Complex(config.reMin + j * reStep,
-                    config.imMin + i * imStep), poly, deriv, config.roots,
-                    epsSq, config.maxIter));
+                field.push(newton.iterate(new Complex(config.bounds.reMin +
+                    j * reStep, config.bounds.imMin + i * imStep), poly, deriv,
+                    config.roots, epsSq, config.maxIter));
                 if (!givenExposure) {
                     exposure = Math.max(exposure, field[field.length - 1].iter);
                 }
